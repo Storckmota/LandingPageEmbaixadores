@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Embaixadores Surfguru PRO</title>
+
+  <!-- Font Loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap"
+    rel="stylesheet">
+
+  <style>
+    /* 1. RESET E VARIÁVEIS (DESIGN SYSTEM) */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Colors */
+      --ocean-deep: #042C53;
+      --ocean-mid: #185FA5;
+      --ocean-light: #B5D4F4;
+      --ocean-foam: #E6F1FB;
+      --brand-orange: #ff8500;
+      --orange-dark: #cc6a00;
+      --sand: #FAC775;
+      --sand-warm: #BA7517;
+      --white: #ffffff;
+      --offwhite: #F7F6F2;
+      --text-dark: #0D1B2A;
+      --text-mid: #3a4a5c;
+      --text-muted: #6b7f92;
+
+      /* Typography Role / Size / Line-height */
+      --font-main: 'Roboto', sans-serif;
+      --text-h1: clamp(2.8rem, 7vw, 5.5rem);
+      --lh-h1: 1.05;
+      --text-h2: clamp(2rem, 4vw, 3rem);
+      --lh-h2: 1.1;
+      --text-h3: 1.1rem;
+      --lh-h3: 1.3;
+      --text-h4: 0.95rem;
+      --lh-h4: 1.4;
+      --text-body-lg: clamp(1rem, 2vw, 1.2rem);
+      --lh-body-lg: 1.75;
+      --text-body: 1rem;
+      --lh-body: 1.7;
+      --text-body-sm: 0.95rem;
+      --text-caption: 0.8rem;
+      --lh-caption: 1.4;
+      --text-helper: 0.85rem;
+      --lh-helper: 1.6;
+
+      /* Radii */
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-pill: 100px;
+
+      /* Utilities for JS */
+      --mouse-x: 50%;
+      --mouse-y: 50%;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--offwhite);
+      color: var(--text-dark);
+      font-weight: 300;
+      line-height: var(--lh-body);
+      font-size: var(--text-body);
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--offwhite);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--text-muted);
+      border-radius: 4px;
+    }
+
+    /* 2. TIPOGRAFIA GLOBAL */
+    h1 {
+      font-weight: 900;
+      font-size: var(--text-h1);
+      line-height: var(--lh-h1);
+    }
+
+    h2 {
+      font-weight: 900;
+      font-size: var(--text-h2);
+      line-height: var(--lh-h2);
+    }
+
+    h3 {
+      font-weight: 700;
+      font-size: var(--text-h3);
+      line-height: var(--lh-h3);
+    }
+
+    h4 {
+      font-weight: 500;
+      font-size: var(--text-h4);
+      line-height: var(--lh-h4);
+    }
+
+    .body-lg {
+      font-weight: 300;
+      font-size: var(--text-body-lg);
+      line-height: var(--lh-body-lg);
+    }
+
+    .body-sm {
+      font-weight: 400;
+      font-size: var(--text-body-sm);
+      line-height: var(--lh-body);
+    }
+
+    .caption {
+      font-weight: 500;
+      font-size: var(--text-caption);
+      line-height: var(--lh-caption);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .helper {
+      font-weight: 300;
+      font-size: var(--text-helper);
+      line-height: var(--lh-helper);
+    }
+
+
+    /* 3. ANIMAÇÕES (Scroll & Background) */
+    .animate-on-scroll {
+      opacity: 0.01;
+      filter: blur(10px);
+      transform: translateY(20px);
+      transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .animate-on-scroll.in-view {
+      opacity: 1;
+      filter: blur(0);
+      transform: translateY(0);
+    }
+
+    .delay-100 {
+      transition-delay: 100ms;
+    }
+
+    .delay-200 {
+      transition-delay: 200ms;
+    }
+
+    .delay-300 {
+      transition-delay: 300ms;
+    }
+
+    /* 4. COMPONENTES */
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 1rem 2.5rem;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-main);
+      font-weight: 500;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--brand-orange);
+      color: var(--white);
+    }
+
+    /* Btn Advanced Hover Animations (Beam & Shimmer) */
+    @property --beam-angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+
+    .wave-btn {
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Hide legacy HTML tags so they don't block design */
+    .wave-btn .beam-border {
+      display: none;
+    }
+
+    .wave-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: conic-gradient(from var(--beam-angle) at 50% 50%, transparent 40deg, rgba(255, 255, 255, 0.9) 80deg, transparent 120deg);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .wave-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transform: translateX(-150%) skewX(-15deg);
+      pointer-events: none;
+      z-index: 11;
+    }
+
+    .wave-btn:hover::before {
+      opacity: 1;
+      animation: spin-beam-angle 2s linear infinite;
+    }
+
+    .wave-btn:hover::after {
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes spin-beam-angle {
+      0% {
+        --beam-angle: 0deg;
+      }
+
+      100% {
+        --beam-angle: 360deg;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: translateX(-150%) skewX(-15deg);
+      }
+
+      100% {
+        transform: translateX(250%) skewX(-15deg);
+      }
+    }
+
+    .btn-primary:hover,
+    .btn-green:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(255, 133, 0, 0.3);
+    }
+
+    .btn-green:hover {
+      box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-content {
+      position: relative;
+      z-index: 2;
+      /* above beam */
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--ocean-light);
+      border: 1px solid rgba(181, 212, 244, 0.4);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.4rem 1.2rem;
+      border-radius: var(--radius-pill);
+      background: rgba(255, 133, 0, 0.15);
+      border: 1px solid rgba(255, 133, 0, 0.3);
+      color: var(--brand-orange);
+    }
+
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      background: rgba(4, 44, 83, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s;
+    }
+
+    .navbar.hidden {
+      transform: translateY(-100%);
+    }
+
+    .nav-logo img {
+      height: 60px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--ocean-light);
+      text-decoration: none;
+      font-size: var(--text-body-sm);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .navbar {
+        padding: 0 1.2rem;
+        height: 70px;
+      }
+
+      .navbar .btn {
+        padding: 0.5rem 1rem !important;
+        font-size: 0.8rem !important;
+      }
+
+      .nav-logo img {
+        height: 48px;
+      }
+    }
+
+    /* Containers */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    section {
+      padding: 6rem 0;
+    }
+
+    /* 5. SEÇÕES ESPECÍFICAS */
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      background: var(--ocean-deep);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 140px;
+      /* navbar offset + breathing room */
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 110%, rgba(255, 133, 0, 0.25) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 20% 20%, rgba(24, 95, 165, 0.3) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wave-bg {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      max-width: 860px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero h1 {
+      color: var(--white);
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 span {
+      color: var(--brand-orange);
+      position: relative;
+      display: inline-block;
+    }
+
+    .hero p.lead {
+      color: var(--ocean-light);
+      max-width: 600px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    /* Base Light Section */
+    .section-light {
+      background: var(--offwhite);
+      position: relative;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* Grid de Passos (How it works) */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .step-card {
+      background: var(--white);
+      border: 1px solid rgba(4, 44, 83, 0.05);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+      transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+    }
+
+    .step-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    }
+
+    .step-card::before {
+      content: attr(data-num);
+      position: absolute;
+      top: -1rem;
+      right: 1rem;
+      font-weight: 900;
+      font-size: 8rem;
+      color: var(--ocean-foam);
+      line-height: 1;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .step-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--ocean-foam);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--ocean-mid);
+    }
+
+    .step-card h3 {
+      color: var(--ocean-deep);
+      margin-bottom: 0.75rem;
+    }
+
+    .step-card p {
+      color: var(--text-mid);
+    }
+
+
+    /* Section Escura (Points) com Flashlight Effect */
+    .section-dark {
+      background: var(--ocean-deep);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .section-dark .caption {
+      color: var(--brand-orange);
+    }
+
+    .section-dark h2 {
+      color: var(--white);
+      margin-top: 1rem;
+    }
+
+    .points-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 1.5rem;
+      margin-top: 4rem;
+    }
+
+    /* Flashlight Card (Adaptado da Referência) */
+    .flashlight-card {
+      position: relative;
+      background-color: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      height: 100%;
+    }
+
+    .flashlight-card::before {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: 0;
+      border-radius: inherit;
+      background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+          rgba(255, 133, 0, 0.08),
+          transparent 40%);
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    .flashlight-card::after {
+      content: "";
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: 0;
+      border-radius: inherit;
+      background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),
+          rgba(255, 255, 255, 0.03),
+          transparent 40%);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.5s;
+      pointer-events: none;
+    }
+
+    .flashlight-border {
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),
+          rgba(255, 133, 0, 0.5),
+          transparent 40%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .flashlight-card:hover::before,
+    .flashlight-card:hover .flashlight-border {
+      opacity: 1;
+    }
+
+    .pt-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: var(--brand-orange);
+      color: var(--white);
+      border-radius: var(--radius-md);
+      font-weight: 900;
+      font-size: 1.2rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 4px 12px rgba(255, 133, 0, 0.3);
+    }
+
+    .flashlight-card h4 {
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+
+    .flashlight-card p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: var(--text-helper);
+    }
+
+    .goal-banner {
+      margin-top: 3rem;
+      background: rgba(255, 133, 0, 0.1);
+      border: 1px solid rgba(255, 133, 0, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .goal-banner h2 {
+      color: var(--brand-orange);
+      font-size: clamp(3rem, 6vw, 4.5rem);
+      line-height: 1;
+      margin: 0;
+    }
+
+    .goal-banner p {
+      color: var(--ocean-light);
+    }
+
+    .goal-banner p strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    @media (max-width: 600px) {
+      .goal-banner {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+    }
+
+
+    /* Bônus */
+    .bonus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .bonus-card {
+      background: var(--white);
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bonus-card.highlight {
+      background: var(--ocean-deep);
+      color: var(--white);
+      border-color: var(--ocean-deep);
+    }
+
+    .bonus-card.highlight p {
+      color: var(--ocean-light);
+    }
+
+    .bonus-card.highlight h3 {
+      color: var(--white);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius-pill);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1.5rem;
+      width: max-content;
+    }
+
+    .tag-blue {
+      background: var(--ocean-foam);
+      color: var(--ocean-mid);
+    }
+
+    .tag-orange {
+      background: rgba(255, 133, 0, 0.15);
+      color: var(--brand-orange);
+    }
+
+    .bonus-num {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--ocean-mid);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .bonus-card.highlight .bonus-num {
+      color: var(--brand-orange);
+    }
+
+    .bonus-card h3 {
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+    }
+
+    .bonus-card p {
+      color: var(--text-mid);
+    }
+
+
+    /* CTA Final Split Grid */
+    .cta-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 900px;
+      margin: 4rem auto 0;
+    }
+
+    @media (max-width: 768px) {
+      .cta-split {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .cta-box {
+      border-radius: var(--radius-lg);
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-box-primary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .cta-box-secondary {
+      background: rgba(37, 211, 102, 0.08);
+      /* Zap Green subtle */
+      border: 1px solid rgba(37, 211, 102, 0.2);
+    }
+
+    .step-number {
+      font-weight: 900;
+      font-size: var(--text-caption);
+      letter-spacing: 0.14em;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 1rem;
+    }
+
+    .box-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-box-primary .box-icon {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--white);
+    }
+
+    .cta-box-secondary .box-icon {
+      background: rgba(37, 211, 102, 0.2);
+      color: #25D366;
+    }
+
+    .cta-box h3 {
+      color: var(--white);
+      margin-bottom: 0.75rem;
+    }
+
+    .cta-box p {
+      color: rgba(255, 255, 255, 0.6);
+      flex: 1;
+      margin-bottom: 2rem;
+    }
+
+    .btn-green {
+      background: #25D366;
+      color: var(--white);
+      box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+    }
+
+    .btn-green .beam-border {
+      background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(255, 255, 255, 0.8) 60deg, transparent 120deg);
+    }
+
+    .subtext {
+      margin-top: 3rem;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: var(--text-helper);
+      text-align: center;
+    }
+
+    /* Footer */
+    footer {
+      background: #020D18;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-logo {
+      height: 64px;
+      margin-bottom: 1rem;
+    }
+
+    footer p {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: var(--text-helper);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <a href="#" class="nav-logo">
+      <img src="Surfguru_sem_onda_branca_sem_fundo.png" alt="Surfguru PRO">
+    </a>
+    <div class="nav-links">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#pontuacao">Pontuação</a>
+      <a href="#bonus">Bônus</a>
+    </div>
+    <a href="https://surfguru.com.br/cadastro" target="_blank" rel="noopener" class="btn btn-primary wave-btn"
+      style="padding: 0.6rem 1.5rem; font-size: 0.9rem;">
+      <div class="beam-border"></div>
+      <span class="btn-content">Quero ser embaixador</span>
+    </a>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero text-center pt-24">
+    <div class="hero-content animate-on-scroll">
+      <span class="caption badge mb-4">Programa de Embaixadores</span>
+
+      <h1>Você faz parte<br>da nossa <span>Ohana</span> 🤙🏾</h1>
+
+      <p class="body-lg lead animate-on-scroll delay-100">
+        Seja um embaixador oficial do Surfguru PRO. Compartilhe a vibe, ganhe reconhecimento e mantenha sua conta PRO de
+        graça o ano todo.
+      </p>
+
+      <div class="hero-ctas animate-on-scroll delay-200">
+        <a href="https://surfguru.com.br/cadastro" target="_blank" rel="noopener" class="btn btn-primary wave-btn">
+          <div class="beam-border"></div>
+          <span class="btn-content">Quero ser embaixador</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
+          </svg>
+        </a>
+        <a href="#como-funciona" class="btn btn-secondary wave-btn">
+          Como funciona
+        </a>
+      </div>
+    </div>
+
+    <!-- SVG wave decoration -->
+    <svg class="wave-bg" viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path fill="#ffffff"
+        d="M0,192L48,181.3C96,171,192,149,288,154.7C384,160,480,192,576,186.7C672,181,768,139,864,133.3C960,128,1056,160,1152,170.7C1248,181,1344,171,1392,165.3L1440,160L1440,320L0,320Z" />
+      <path fill="#ff8500" opacity="0.5"
+        d="M0,256L48,240C96,224,192,192,288,197.3C384,203,480,245,576,240C672,235,768,181,864,170.7C960,160,1056,192,1152,208C1248,224,1344,224,1392,224L1440,224L1440,320L0,320Z" />
+    </svg>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section-light" id="como-funciona">
+    <div class="container animate-on-scroll">
+      <p class="caption mb-2" style="color: var(--brand-orange);">O programa</p>
+      <h2>Simples assim,<br>como uma boa onda</h2>
+      <p class="body-lg mt-4" style="color: var(--text-mid); max-width: 600px;">
+        Você recebe uma cortesia anual do Surfguru PRO em troca de engajamento com a nossa comunidade. Poste, crie,
+        colabore e renove de graça.
+      </p>
+
+      <div class="steps-grid">
+        <!-- Step 1 -->
+        <div class="step-card animate-on-scroll delay-100" data-num="01">
+          <div class="step-content">
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="8.5" cy="7" r="4"></circle>
+                <line x1="20" y1="8" x2="20" y2="14"></line>
+                <line x1="23" y1="11" x2="17" y2="11"></line>
+              </svg>
+            </div>
+            <h3>Cadastre-se</h3>
+            <p class="body-sm">Crie sua conta no site do Surfguru. A equipe libera o acesso PRO cortesia e te adiciona
+              ao programa oficial.</p>
+          </div>
+        </div>
+        <!-- Step 2 -->
+        <div class="step-card animate-on-scroll delay-200" data-num="02">
+          <div class="step-content">
+            <div class="step-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                </path>
+              </svg>
+            </div>
+            <h3>Engaje & Pontue</h3>
+            <p class="body-sm">Posts, collabs, fotos, matérias e cupons valem pontos. Acumule 24 pontos ao longo de um
+              ano na comunidade.</p>
+          </div>
+        </div>
+        <!-- Step 3 -->
+        <div class="step-card animate-on-scroll delay-300" data-num="03">
+          <div class="step-content">
+            <div class="step-icon" style="color: var(--brand-orange); background: rgba(255,133,0,0.15);">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+              </svg>
+            </div>
+            <h3>Renove de graça</h3>
+            <p class="body-sm">Bateu a meta de 24 pontos? Sua cortesia PRO renova por mais 12 meses automaticamente.
+              Simples assim.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POINTS SYSTEM -->
+  <section class="section-dark" id="pontuacao">
+    <div class="container">
+      <p class="caption animate-on-scroll">Sistema de pontos</p>
+      <h2 class="animate-on-scroll">Cada ação conta</h2>
+
+      <div class="points-grid" id="flashlight-wrapper">
+        <!-- Flashlight Hover injected via JS to .flashlight-card -->
+        <div class="flashlight-card animate-on-scroll delay-100">
+          <div class="flashlight-border"></div>
+          <div class="pt-badge">+1</div>
+          <h4>Post, Reels ou Stories</h4>
+          <p>Postagem pública no feed marcando @surfgurupro. Use #SurfguruAvisou quando fizer sentido.</p>
+        </div>
+
+        <div class="flashlight-card animate-on-scroll delay-200">
+          <div class="flashlight-border"></div>
+          <div class="pt-badge">+2</div>
+          <h4>Collab com o Surfguru</h4>
+          <p>Collab entre o seu perfil e o Surfguru com #SurfguruAvisou na legenda, sujeito à curadoria.</p>
+        </div>
+
+        <div class="flashlight-card animate-on-scroll delay-300">
+          <div class="flashlight-border"></div>
+          <div class="pt-badge">+1</div>
+          <h4>Envio de fotos</h4>
+          <p>Por foto aprovada e utilizada em criativos do Surfguru. Manda aquela foto irada da sessão!</p>
+        </div>
+
+        <div class="flashlight-card animate-on-scroll delay-100">
+          <div class="flashlight-border"></div>
+          <div class="pt-badge">+3</div>
+          <h4>Matéria publicada</h4>
+          <p>Cobertura de swell, campeonato ou eventos enviada via email, se aprovada pelo portal.</p>
+        </div>
+
+        <div class="flashlight-card animate-on-scroll delay-200">
+          <div class="flashlight-border"></div>
+          <div class="pt-badge">+2</div>
+          <h4>Cupom utilizado</h4>
+          <p>Cada vez que alguém usa o seu cupom personal de 30 dias grátis no plano PRO.</p>
+        </div>
+      </div>
+
+      <div class="goal-banner animate-on-scroll">
+        <h2>24</h2>
+        <p><strong>pontos por ano = cortesia renovada.</strong><br>Não bateu a meta? A gente revisa: pode ser desconto
+          ou encerramento da cortesia. A relação é sempre de parceria.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BONUSES -->
+  <section class="section-light" id="bonus">
+    <div class="container animate-on-scroll">
+      <p class="caption" style="color: var(--brand-orange)">Bônus Exclusivos</p>
+      <h2>Vai além da onda</h2>
+
+      <div class="bonus-grid">
+        <div class="bonus-card animate-on-scroll delay-100">
+          <span class="tag tag-blue">Conteúdo Extra</span>
+          <div class="bonus-num">4+4</div>
+          <h3>Brinde oficial Surfguru</h3>
+          <p class="body-sm">Faça 4 matérias no site e 4 collabs nas redes sociais no ano e ganhe um boné ou camiseta
+            oficial do Surfguru, mais vários adesivos. 🤙🏾</p>
+        </div>
+
+        <div class="bonus-card highlight animate-on-scroll delay-200">
+          <span class="tag tag-orange">Bônus Comercial</span>
+          <div class="bonus-num">10%</div>
+          <h3>Comissão por negócios</h3>
+          <p class="body-sm">Trouxe uma empresa parceira para anunciar no portal Surfguru? Você recebe 10% de comissão
+            sobre o valor total fechado no projeto. 💰</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA REGISTER (Split Grid like Condor) -->
+  <section class="section-dark" id="cadastro" style="padding-bottom: 8rem;">
+    <div class="container animate-on-scroll">
+      <div class="text-center">
+        <p class="caption">Junte-se à Ohana</p>
+        <h2>Pronto para entrar no lineup?</h2>
+        <p class="body-lg" style="color: rgba(255,255,255,0.6); max-width: 600px; margin: 0 auto;">
+          Dois passos super rápidos. Crie sua conta para liberarmos o acesso PRO, e junte-se à nossa resenha dos
+          embaixadores no WhatsApp.
+        </p>
+      </div>
+
+      <div class="cta-split">
+        <!-- Site -->
+        <div class="cta-box cta-box-primary animate-on-scroll delay-100">
+          <div class="step-number">PASSO 01</div>
+          <div class="box-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+          </div>
+          <h3>Conta no Surfguru</h3>
+          <p class="body-sm">Acesse o sistema e crie o seu login no portal oficial. Nossa equipe validará seu perfil
+            para liberar a assinatura cortesia.</p>
+          <a href="https://surfguru.com.br/cadastro" target="_blank" rel="noopener" class="btn btn-primary wave-btn"
+            style="width:100%">
+            <div class="beam-border"></div>
+            <span class="btn-content">Criar conta / Login</span>
+          </a>
+        </div>
+
+        <!-- Zap -->
+        <div class="cta-box cta-box-secondary animate-on-scroll delay-200">
+          <div class="step-number">PASSO 02</div>
+          <div class="box-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+            </svg>
+          </div>
+          <h3>Grupo da Ohana</h3>
+          <p class="body-sm">Nosso grupo exclusivo (fechado) no WhatsApp, onde a galera troca ideia, combina collabs e
+            fica por dentro das novidades.</p>
+          <a href="https://chat.whatsapp.com/LwvhAHt918QAvMdvZ3eCmk?mode=gi_t" target="_blank" rel="noopener"
+            class="btn btn-green wave-btn" style="width:100%">
+            <div class="beam-border"></div>
+            <span class="btn-content">Entrar no grupo</span>
+          </a>
+        </div>
+      </div>
+      <div class="subtext">Os links abrirão uma nova aba no seu navegador. Segurança 100%.</div>
+    </div>
+  </section>
+
+  <footer>
+    <img src="Surfguru_sem_onda_branca_sem_fundo.png" alt="Surfguru Logo" class="footer-logo">
+    <p>© 2025 Grupo GURU · Todos os direitos reservados</p>
+  </footer>
+
+  <script>
+    /* FLASHLIGHT EFFECT TRACKING */
+    const flashlightWrapper = document.getElementById('flashlight-wrapper');
+    if (flashlightWrapper) {
+      flashlightWrapper.addEventListener('mousemove', (e) => {
+        const cards = document.querySelectorAll('.flashlight-card');
+        cards.forEach(card => {
+          const rect = card.getBoundingClientRect();
+          // calc position relative to the element
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          // bind CSS vars to the card
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        });
+      });
+    }
+
+    /* SCROLL REVEAL ANIMATION */
+    const observerOpts = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target); // only once
+        }
+      });
+    }, observerOpts);
+
+    document.querySelectorAll('.animate-on-scroll').forEach(el => {
+      observer.observe(el);
+    });
+
+    /* NAVBAR SCROLL LOGIC */
+    let lastScrollY = window.scrollY;
+    const navbar = document.getElementById('navbar');
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.scrollY;
+      // Hide on scroll down, show on scroll up. But keep visible if close to top.
+      if (currentScroll > lastScrollY && currentScroll > 150) {
+        navbar.classList.add('hidden');
+      } else {
+        navbar.classList.remove('hidden');
+      }
+      lastScrollY = currentScroll;
+    });
+
+  </script>
+
+</body>
+
+</html>
